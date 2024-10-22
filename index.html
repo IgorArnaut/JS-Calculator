@@ -4,67 +4,135 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
-    <link
-      rel="stylesheet"
-      href="node_modules/bootstrap/dist/css/bootstrap.css"
-    />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
   </head>
   <body>
-    <div class="container fs-1 fw-semibold">
-      <div class="row border-top border-start border-end border-black text-end">
-        <div class="col-12">0</div>
-      </div>
-      <div
-        class="row border-bottom border-start border-end border-black text-end"
-      >
-        <div class="col-12">0</div>
+    <div class="container border fs-1 fw-semibold">
+      <div class="row">
+        <div class="col-12 border border-black text-end" id="screen">0</div>
       </div>
       <div class="row">
         <button class="col-3 border border-black bg-secondary-subtle">%</button>
-        <button class="col-3 border border-black bg-secondary-subtle">
-          CE
-        </button>
+        <button class="col-3 border border-black bg-secondary-subtle">CE</button>
         <button class="col-3 border border-black bg-secondary-subtle">C</button>
-        <button class="col-3 border border-black bg-secondary-subtle">
-          BACKSPACE
-        </button>
+        <button class="col-3 border border-black bg-secondary-subtle" id="backspace">BCKSPC</button>
       </div>
       <div class="row">
-        <button class="col-3 border border-black bg-secondary-subtle">
-          1/x
-        </button>
-        <button class="col-3 border border-black bg-secondary-subtle">
-          x^2
-        </button>
-        <button class="col-3 border border-black bg-secondary-subtle">
-          sqrt(x)
-        </button>
-        <button class="col-3 border border-black bg-secondary-subtle">/</button>
+        <button class="col-3 border border-black bg-secondary-subtle special">1/x</button>
+        <button class="col-3 border border-black bg-secondary-subtle special">x^2</button>
+        <button class="col-3 border border-black bg-secondary-subtle special">sqrt(x)</button>
+        <button class="col-3 border border-black bg-secondary-subtle operator">/</button>
       </div>
       <div class="row">
-        <button class="col-3 border border-black bg-primary-subtle">7</button>
-        <button class="col-3 border border-black bg-primary-subtle">8</button>
-        <button class="col-3 border border-black bg-primary-subtle">9</button>
-        <button class="col-3 border border-black bg-secondary-subtle">*</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">7</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">8</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">9</button>
+        <button class="col-3 border border-black bg-secondary-subtle operator">*</button>
       </div>
       <div class="row">
-        <button class="col-3 border border-black bg-primary-subtle">4</button>
-        <button class="col-3 border border-black bg-primary-subtle">5</button>
-        <button class="col-3 border border-black bg-primary-subtle">6</button>
-        <button class="col-3 border border-black bg-secondary-subtle">-</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">4</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">5</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">6</button>
+        <button class="col-3 border border-black bg-secondary-subtle operator">-</button>
       </div>
       <div class="row">
-        <button class="col-3 border border-black bg-primary-subtle">1</button>
-        <button class="col-3 border border-black bg-primary-subtle">2</button>
-        <button class="col-3 border border-black bg-primary-subtle">3</button>
-        <button class="col-3 border border-black bg-secondary-subtle">+</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">1</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">2</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">3</button>
+        <button class="col-3 border border-black bg-secondary-subtle operator">+</button>
       </div>
       <div class="row">
-        <button class="col-3 border border-black bg-primary-subtle">+/-</button>
-        <button class="col-3 border border-black bg-primary-subtle">0</button>
-        <button class="col-3 border border-black bg-primary-subtle">.</button>
-        <button class="col-3 border border-black bg-success-subtle">=</button>
+        <button class="col-3 border border-black bg-primary-subtle" id="minus">+/-</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">0</button>
+        <button class="col-3 border border-black bg-primary-subtle digit">.</button>
+        <button class="col-3 border border-black bg-success-subtle" id="equals">=</button>
       </div>
     </div>
+
+    <script type="text/javascript">
+      window.addEventListener("load", function () {
+        const screen = document.getElementById("screen");
+
+        let num1 = 0;
+        let num2 = 0;
+        let res = 0;
+        let operator = "";
+
+        document.getElementById("backspace").click("click", function () {
+          const num = Number(screen.innerHTML);
+          screen.innerHTML = num > 1 ? Math.floor(num / 10) : 0;
+        });
+
+        Array.from(document.getElementsByClassName("special")).forEach(function (s) {
+          s.addEventListener("click", function (e) {
+            const num = Number(screen.innerHTML);
+
+            switch (e.target.innerHTML) {
+              case "1/x":
+                screen.innerHTML = 1.0 / num;
+                break;
+              case "x^2":
+                screen.innerHTML = num * num;
+                break;
+              case "sqrt(x)":
+                screen.innerHTML = Math.sqrt(num);
+                break;
+            }
+          });
+        });
+
+        Array.from(document.getElementsByClassName("digit")).forEach(function (d) {
+          d.addEventListener("click", function (e) {
+            const value = e.target.innerHTML;
+            console.log(value);
+            if (screen.innerHTML === "0") screen.innerHTML = e.target.innerHTML;
+            else screen.innerHTML += e.target.innerHTML;
+          });
+        });
+
+        document.getElementById("minus").addEventListener("click", function () {
+          console.log("minus");
+          const num = Number(screen.innerHTML);
+          screen.innerHTML = num < 0 ? Math.abs(num) : -num;
+        });
+
+        Array.from(document.getElementsByClassName("operator")).forEach(function (o) {
+          o.addEventListener("click", function (e) {
+            if (operator === "") {
+              operator = e.target.innerHTML;
+              num1 = Number(screen.innerHTML);
+              screen.innerHTML = 0;
+            }
+          });
+        });
+
+        document.getElementById("equals").addEventListener("click", function () {
+          if (num1 === 0) return;
+          if (operator === "") return;
+
+          num2 = Number(screen.innerHTML);
+          let res = 0;
+
+          switch (operator) {
+            case "+":
+              res = num1 + num2;
+              break;
+            case "-":
+              res = num1 - num2;
+              break;
+            case "*":
+              res = num1 * num2;
+              break;
+            case "/":
+              res = num1 / num2;
+              break;
+          }
+
+          screen.innerHTML = res;
+          num1 = res;
+          operator = "";
+        });
+      });
+    </script>
   </body>
 </html>
