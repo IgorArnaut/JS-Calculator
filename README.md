@@ -1,2 +1,2 @@
-# Calculator
- A calculator.
+# JS Calculator
+A JavaScript calculator.
