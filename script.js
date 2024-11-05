@@ -6,15 +6,12 @@ let res = 0;
 let operator = "";
 
 window.addEventListener("load", () => {
-  console.log("LOADED !!!");
-
   document.getElementById("minus").addEventListener("click", () => {
     const num = Number(screen.textContent);
     screen.textContent = num < 0 ? Math.abs(num) : -num;
   });
 
   document.getElementById("bckspc").addEventListener("click", () => {
-    console.log("BUTTON PRESSED !!!");
     const num = Number(screen.textContent);
     let newNum = Math.abs(num) > 0 ? Math.floor(Math.abs(num) / 10) : 0;
     if (num < 0) newNum = -newNum;
