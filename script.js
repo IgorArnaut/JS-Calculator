@@ -9,38 +9,38 @@ window.addEventListener("load", () => {
   console.log("LOADED !!!");
 
   document.getElementById("minus").addEventListener("click", () => {
-    const num = Number(screen.innerHTML);
-    screen.innerHTML = num < 0 ? Math.abs(num) : -num;
+    const num = Number(screen.textContent);
+    screen.textContent = num < 0 ? Math.abs(num) : -num;
   });
 
   document.getElementById("bckspc").addEventListener("click", () => {
     console.log("BUTTON PRESSED !!!");
-    const num = Number(screen.innerHTML);
+    const num = Number(screen.textContent);
     let newNum = Math.abs(num) > 0 ? Math.floor(Math.abs(num) / 10) : 0;
     if (num < 0) newNum = -newNum;
-    screen.innerHTML = newNum;
+    screen.textContent = newNum;
   });
 
   Array.from(document.getElementsByClassName("digit")).forEach((d) => {
     d.addEventListener("click", function (e) {
-      if (screen.innerHTML === "0") screen.innerHTML = e.target.innerHTML;
-      else screen.innerHTML += e.target.innerHTML;
+      if (screen.textContent === "0") screen.textContent = e.target.textContent;
+      else screen.textContent += e.target.textContent;
     });
   });
 
   Array.from(document.getElementsByClassName("special")).forEach((s) => {
     s.addEventListener("click", function (e) {
-      const num = Number(screen.innerHTML);
+      const num = Number(screen.textContent);
 
-      switch (e.target.innerHTML) {
+      switch (e.target.textContent) {
         case "1/x":
-          screen.innerHTML = 1.0 / num;
+          screen.textContent = 1.0 / num;
           break;
         case "x^2":
-          screen.innerHTML = num * num;
+          screen.textContent = num * num;
           break;
         case "sqrt(x)":
-          screen.innerHTML = Math.sqrt(num);
+          screen.textContent = Math.sqrt(num);
           break;
       }
     });
@@ -49,9 +49,9 @@ window.addEventListener("load", () => {
   Array.from(document.getElementsByClassName("operator")).forEach((o) => {
     o.addEventListener("click", function (e) {
       if (operator === "") {
-        operator = e.target.innerHTML;
-        num1 = Number(screen.innerHTML);
-        screen.innerHTML = 0;
+        operator = e.target.textContent;
+        num1 = Number(screen.textContent);
+        screen.textContent = 0;
       }
     });
   });
@@ -60,7 +60,7 @@ window.addEventListener("load", () => {
     if (num1 === 0) return;
     if (operator === "") return;
 
-    num2 = Number(screen.innerHTML);
+    num2 = Number(screen.textContent);
     res = 0;
 
     switch (operator) {
@@ -78,7 +78,7 @@ window.addEventListener("load", () => {
         break;
     }
 
-    screen.innerHTML = res;
+    screen.textContent = res;
     num1 = res;
     operator = "";
   });
