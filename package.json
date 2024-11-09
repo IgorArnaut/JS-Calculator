@@ -1,5 +1,5 @@
 {
-  "name": "calculator",
+  "name": "js-calculator",
   "version": "1.0.0",
   "description": "A JavaScript calculator.",
   "main": "script.js",
